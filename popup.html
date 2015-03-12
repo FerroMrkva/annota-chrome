@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Annota</title>
+
+    <link href="external/jquery-ui.css" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="external/bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet">
+		<!-- jQuery tag-it -->
+    <link href="external/jquery.tagit.min.css" rel="stylesheet">
+		<!-- jQuery select2 -->
+    <link href="external/select2-3.5.1/select2.css" rel="stylesheet">
+    <link href="popup.css" rel="stylesheet">
+  </head>
+  <body class='popup'>
+
+	<form accept-charset="UTF-8" action="" class="form-horizontal" id="form-bookmark" data-remote="true" method="post">
+		<div>
+			<div id='popup_header'>
+				<div class="h4">
+					Bookmarking in Annota...
+					<img class='ajax-loader' src='data/ajax-loader.gif'></img>
+				</div>
+				<a id='logout_button' href="#" aria-hidden="true" class="btn cancel-btn">Log out</a>
+			</div>
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#bookmark" data-toggle="tab">Bookmark</a></li>
+				<li class=""><a href="#share" data-toggle="tab">Share</a></li>
+			</ul>
+
+			<div class="tab-content">
+
+				<!-- Bookmark tab -->
+				<div class="tab-pane active" id="bookmark">
+					<div class="control-group string optional">
+						<label class="string optional control-label" for="Title">Bookmark title</label>
+						<div class="controls">
+							<div class="form-control" id="title-container">
+								<img class='ajax-loader' src='data/ajax-loader.gif'></img>
+								<input class="form-control string optional" id="title" name="title" placeholder="Title" title="Title" type="text" value="">
+							</div>
+						</div>
+					</div>
+					<div class="control-group string optional">
+						<label class="string optional control-label" for="Tags">Tags</label>
+						<div class="controls">
+							<input class="tag_string_field" id="tag_string" name="tag_string" title="Tags" type="text" style='display: none;'>
+							<ul class="tags_list string optional form-control" id="tag_list" style="margin-left: 0;"></ul>
+							<img id='tags-ajax-loader' class='ajax-loader' src='data/ajax-loader.gif'></img>
+						</div>
+					</div>
+					<div class="control-group string optional">
+						<!--<label class="string optional control-label" for="Note">Note</label>-->
+						<div class="controls">
+							<ul class="nav nav-tabs">
+								<li class="active"><a href="#tab-note" data-toggle="tab">Note</a></li>
+								<li><a href="#tab-public_note" data-toggle="tab">Public note</a></li>
+							</ul>
+							<div class="tab-content notes">
+								<div class="tab-pane active" id='tab-note'>
+									<img class='ajax-loader' src='data/ajax-loader.gif'></img>
+									<textarea class="form-control input-xlarge" id="note" name="note" placeholder="Add note." rows="4" title="Note"></textarea>
+								</div>
+								<div class="tab-pane" id='tab-public_note'>
+									<img class='ajax-loader' src='data/ajax-loader.gif'></img>
+									<textarea class="form-control input-xlarge" id="public_note" name="public_note" placeholder="Add public note." rows="4" title="Public note"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="control-group string optional">
+						<div class="controls">
+							<label>
+								Read later <input id="read_later" type="checkbox">
+							</label>
+							<label>
+								Public <input id="public" type="checkbox" checked="checked">
+							</label>
+						</div>
+					</div>
+					
+					<div id="edit-form-actions" class="modal-footer">
+						<input class="btn btn-primary" id='commit' name="commit" type="submit" value="Save & close">
+						<a id='cancel_button' href="#" aria-hidden="true" class="btn cancel-btn">Remove</a>
+					</div>
+				</div>
+
+				<!-- Share tab -->
+				<div class="tab-pane" id="share">
+					<!--
+					<div class="control-group">
+						<label class="control-label">Recommend to users</label>
+						<div class="controls">
+							<input class="span7" id="target_user_ids" name="target_user_ids" type="hidden" value="" tabindex="-1">
+							<span class="help-block" style='display: none;'>
+								Currently recommended to <%=raw @present_recommendations.map{|r| link_to r.fullname, r}.join(", ") %>
+							</span>
+						</div>
+					</div>
+
+					<hr>-->
+
+					<div class="control-group string optional">
+						<label class="string optional control-label" for="Share_in_groups">Share in groups</label>
+						<div class="controls">
+							<input class="tag_string_field" id="group_share_string" name="group_share_string" type="text" style='display: none;'>
+							<ul class="tags_list string optional form-control" id="group_share_list" style="margin-left: 0;"></ul>
+						</div>
+					</div>
+					<div class="control-group string optional">
+						<label class="string optional control-label" for="Comment">Comment</label>
+						<div class="controls">
+							<textarea class="form-control span7" id="comment" name="comment" placeholder="Add shared comment." rows="4"></textarea>
+						</div>
+					</div>
+
+					<div id="edit-form-actions" class="modal-footer">
+						<input class="btn btn-primary" id="group_share" name="group_share" type="submit" value="Share">
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</form>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="external/jquery-2.0.3.min.js"></script>
+	<script src="external/jquery-ui-1.10.3.custom.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="external/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
+	<script src="external/jquery.form.min.js"></script>
+	<!-- jQuery tag-it -->
+	<script src="external/tag-it.js"></script>
+	<!-- jQuery select2 -->
+	<script src="external/select2-3.5.1/select2.min.js"></script>
+	<script src="urls.js"></script>
+	<script src="article_parser.js"></script>
+	<script src="acm_parser.js"></script>
+	<script src="popup.js"></script>
+	</body>
+	</html>

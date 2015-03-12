@@ -1,0 +1,36 @@
+﻿{
+	"manifest_version": 2,
+	"name": "Annota",
+    "version": "1.0.5"
+	,
+	"description": "Annotate, organise and share your research articles.",
+	"background": {
+		"page": "background.html",
+		"persistent": true
+	},
+	"permissions": [
+		"cookies", "tabs", "notifications", "<all_urls>"
+	],
+	"icons": {
+		"48": "data/Annota-48.png",
+		"128": "data/Annota.png"
+	},
+	"browser_action": {
+		"default_icon": "data/Annota2.png",
+		"default_title": "Annota",
+		"default_popup": "init.html"
+	},
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"run_at": "document_start",
+			"js": ["content.start.js"]
+		},
+		{
+			"matches": ["<all_urls>"],
+			"run_at": "document_end",
+			"js": ["external/jquery-2.0.3.min.js", "content.js"]
+		}
+	]
+}
+
